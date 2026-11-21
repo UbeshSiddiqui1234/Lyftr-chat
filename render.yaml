@@ -1,0 +1,42 @@
+# Render Blueprint. A persistent disk requires a paid backend instance; without
+# one, /data is erased on every restart and history will not survive.
+services:
+  - type: web
+    name: gateway-chat-backend
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: starter
+    healthCheckPath: /health
+    disk:
+      name: app-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: DATABASE_URL
+        value: sqlite:////data/app.db
+      - key: CACHE_DIR
+        value: /data/llm-cache
+      - key: ENABLE_FAILURE_SIMULATION
+        value: "true"
+      - key: LLM_MODEL
+        value: gemini/gemini-3.5-flash-lite
+      - key: LLM_KEY_1
+        sync: false
+      - key: LLM_KEY_2
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+
+  - type: web
+    name: gateway-chat-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci --include=dev && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: VITE_API_BASE_URL
+        sync: false

@@ -1,0 +1,6 @@
+# litellm is pinned to the release its maintainers named as safe after the
+# 2026-10-21 supply-chain incident. Review their advisories before bumping it.
+litellm==1.106.2
+fastapi
+uvicorn
+diskcache
