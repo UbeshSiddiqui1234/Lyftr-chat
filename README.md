@@ -7,6 +7,10 @@ A multi-turn chat app with a LiteLLM gateway, API key failover, response caching
 | Frontend | React, TypeScript, Vite, nginx | http://localhost:3000 |
 | Backend | FastAPI, LiteLLM, SQLite | http://localhost:8000 |
 
+## Live deployment
+
+- **Backend:** https://lyftr-chat-ca83.onrender.com (health check: https://lyftr-chat-ca83.onrender.com/health)
+
 ## Run locally
 
 1. Copy `.env.example` to `.env`.
